@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('caption')->nullable();
             $table->string('image_url')->nullable();
-            $table->foreignId('user_id')->constrained(); //when delete user, we delete all their posts
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); //when delete user, we delete all their posts
 
             $table->timestamps();
         });

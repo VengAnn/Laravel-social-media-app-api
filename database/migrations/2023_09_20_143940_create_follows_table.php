@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('follows', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('following_user_id')->constrained('users');
+            $table->foreignId('following_user_id')->constrained('users')->onDelete('cascade');
             $table->unique(['user_id', 'following_user_id']); //a user can only follow another user once
             $table->boolean('accepted')->default(false); // a following need accept or not but defaul accepted
             $table->boolean('blocked')->default(false);
