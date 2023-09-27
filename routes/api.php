@@ -7,6 +7,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Models\Comment;
 use  App\Http\Controllers\LikeController;
+use  App\Http\Controllers\FollowController;
 use App\Models\Like;
 
 /*
@@ -20,9 +21,10 @@ use App\Models\Like;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// }); //build in laravel sanctum and this project in use Laravel Possport to authorized;
+
 
 //Auth Routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -30,6 +32,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/me', [AuthController::class, 'me'])->middleware('auth:api');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 Route::post('/update-profile', [AuthController::class, 'updateUser'])->middleware('auth:api');
+
 
 //Post routes
 Route::get('/posts', [PostController::class, 'index']);
@@ -49,3 +52,9 @@ Route::delete('/posts/comments/{id}', [CommentController::class, 'destroy'])->mi
 //Like Routes
 Route::get('/posts/{postId}/likes', [LikeController::class, 'show'])->middleware('auth:api'); //middleware use for user in login with token => ok can show get delete post meaning of middleware
 Route::post('/posts/{postId}/likes', [LikeController::class, 'togglelike'])->middleware('auth:api');
+
+
+
+//follow Routes
+Route::post('/follow', [FollowController::class, 'follow'])->middleware('auth:api');
+Route::post('/unfollow', [FollowController::class, 'unFollow'])->middleware('auth:api');
