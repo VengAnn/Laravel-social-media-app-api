@@ -15,7 +15,7 @@ class CommentController extends Controller
         if (!$post) {
             return response()->json(['error' => 'Post not found!'], 404);
         }
-        $commet = $post->comments()->with('user')->latest(); //get all the comments for the post
+        $commet = $post->comments()->with('user')->latest()->get(); //get all the comments for the post
         return response()->json(['comments' => $commet], 200);
     }
     //store comment

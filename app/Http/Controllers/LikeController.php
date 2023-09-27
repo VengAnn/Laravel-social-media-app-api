@@ -33,7 +33,7 @@ class LikeController extends Controller
         if (!$post) {
             return response()->json(['error' => 'Post not found!'], 404);
         }
-        $likes = $post->likes()->with('user')->latest(); //get all the likes for post
+        $likes = $post->likes()->with('user')->latest()->get(); //get all the likes for post
         return response()->json(['data' => $likes], 200);
     }
 }

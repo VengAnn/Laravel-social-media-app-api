@@ -36,7 +36,8 @@ Route::get('/posts', [PostController::class, 'index']);
 // Route::get('/posts/{id}', [PostController::class, 'show']);
 Route::post('/posts', [PostController::class, 'store'])->middleware('auth:api');
 Route::post('/posts/{id}', [PostController::class, 'update'])->middleware('auth:api');
-Route::delete('/posts/id}', [PostController::class, 'destroy'])->middleware('auth:api');
+Route::delete('/posts/{id}', [PostController::class, 'destroy'])->middleware('auth:api');
+
 
 //Comment Routes
 Route::get('/posts/{postId}/comments', [CommentController::class, 'show'])->middleware('auth:api');
