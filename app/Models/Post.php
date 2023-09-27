@@ -13,4 +13,24 @@ class Post extends Model
         'image_url',
         'user_id',
     ];
+
+    //table post child of table user
+    //have user and then have post
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    //one post can have many comment and like 
+    //need relationship with table comments
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    //
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }

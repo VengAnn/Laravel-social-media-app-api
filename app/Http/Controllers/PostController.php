@@ -8,6 +8,30 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
+    public function index()
+    {
+        $posts = Post::with('user')->latest()->paginate(20);
+        foreach ($posts as $post) {
+            $post->likesCount = $post->likes->count();
+            $post->commentsCount = $post->comments->count();
+            $post->liked = $post->likes->contains('user_id', Auth::id());
+        }
+        return response()->json($posts, 200);
+    }
+
+    //show detail post
+    public function show($postid)
+    {
+        $post = Post::with('user')->find($postid);
+        if (!$post) {
+            return response()->json(['error' => 'Post not found!'], 404);
+        }
+        $post->likesCount = $post->likes->count();
+        $post->commentsCount = $post->comments->count();
+        $post->liked = $post->likes->contains('user_id', Auth::id());
+        return response()->json(['post' => $post], 200);
+    }
+
     public function store(Request $request)
     {
         $data = $request->all();
@@ -27,11 +51,12 @@ class PostController extends Controller
             return response()->json(['error' => 'Unauthorised'], 401);
         }
     }
+
     //
     public function update(Request $request, $id)
     {
-        $data = $request->all(); //get all the data from the request
-        $user = Auth::user(); //get info about the current logged in user
+        $data = $request->all();    //get all the data from the request
+        $user = Auth::user();   //get info about the current logged in user
         if ($user != null) {
             $post = Post::find($id); //find id in db
             if ($post->user_id == $user->id) {
@@ -58,6 +83,8 @@ class PostController extends Controller
             return response()->json(['error' => 'Unauthorised'], 401);
         }
     }
+
+
     //
     public function destroy($id)
     {
