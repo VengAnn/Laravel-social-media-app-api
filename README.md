@@ -1,4 +1,4 @@
-=> php artisan passport:install command. This command generates the encryption keys needed for OAuth2 authentication.
+=> `php artisan passport:install` command. This command generates the encryption keys needed for OAuth2 authentication.
 
 1. register user with user profile
 2. login
